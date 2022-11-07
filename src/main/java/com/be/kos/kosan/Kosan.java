@@ -1,11 +1,15 @@
 package com.be.kos.kosan;
 
 
+import com.be.kos.kamar.Kamar;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+public
 class Kosan{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +35,17 @@ class Kosan{
 
     public Boolean getDeleted() {
         return deleted;
+    }
+
+    @OneToMany(mappedBy = "kosan", orphanRemoval = true)
+    private List<Kamar> kamars = new ArrayList<>();
+
+    public List<Kamar> getKamars() {
+        return kamars;
+    }
+
+    public void setKamars(List<Kamar> kamars) {
+        this.kamars = kamars;
     }
 
     public void setDeleted(Boolean deleted) {
