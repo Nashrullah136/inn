@@ -1,4 +1,4 @@
-package com.be.kos.pembayaran;
+package com.be.kos.bill.pembayaran;
 
 import javax.persistence.*;
 import java.time.LocalDate;
