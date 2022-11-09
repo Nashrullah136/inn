@@ -1,4 +1,4 @@
-package com.be.kos.harga;
+package com.be.kos.kamar.harga;
 
 import com.be.kos.kamar.Kamar;
 
@@ -22,6 +22,12 @@ public class Harga {
     @JoinColumn(name = "kamar_id", nullable = false)
     private Kamar kamar;
 
+    public Harga(){}
+
+    public Harga(String jenis, Long harga){
+        this.jenis = jenis;
+        this.harga = harga;
+    }
     public Kamar getKamar() {
         return kamar;
     }
