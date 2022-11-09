@@ -2,7 +2,7 @@ package com.be.kos.penghuni;
 
 import com.be.kos.bill.Bill;
 import com.be.kos.kamar.Kamar;
-import com.be.kos.kontak.Kontak;
+import com.be.kos.penghuni.kontak.Kontak;
 
 import javax.persistence.*;
 import java.util.ArrayList;
