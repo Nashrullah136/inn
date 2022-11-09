@@ -1,4 +1,4 @@
-package com.be.kos.kontak;
+package com.be.kos.penghuni.kontak;
 
 import org.springframework.data.repository.CrudRepository;
 
