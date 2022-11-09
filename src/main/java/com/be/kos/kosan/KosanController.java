@@ -2,48 +2,44 @@ package com.be.kos.kosan;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
 public class KosanController {
 
-    private final KosanRepository kosanRepository;
+    private final KosanService kosanService;
 
-    KosanController(KosanRepository kosanRepository){
-        this.kosanRepository = kosanRepository;
+    KosanController(KosanService kosanService){
+        this.kosanService = kosanService;
     }
 
     @GetMapping("/kosan")
-    Iterable<Kosan> all(){
-        return kosanRepository.findAll();
+    Iterable<KosanDto> all(){
+        Iterable<Kosan> kosanIterable = kosanService.getAll();
+        List<KosanDto> kosanDtoList = new ArrayList<>();
+        kosanIterable.forEach(kosan -> kosanDtoList.add(KosanDto.fromDao(kosan)));
+        return kosanDtoList;
     }
 
     @PostMapping("/kosan")
-    Kosan newKosan(@RequestBody Kosan kosan){
-        return kosanRepository.save(kosan);
+    KosanDto newKosan(@RequestBody Kosan kosan){
+        Kosan newKosan = kosanService.save(kosan);
+        return KosanDto.fromDao(newKosan);
     }
 
     @PutMapping("/kosan/{id}")
-    Kosan updateKosan(@RequestBody Kosan newKosan, @PathVariable Long id){
-        return kosanRepository.findById(id).map( kosan -> {
-            kosan.setNama(newKosan.getNama());
-            kosan.setAlamat(newKosan.getAlamat());
-            return kosanRepository.save(kosan);
-        }).orElseGet(() -> {
-            newKosan.setId(id);
-            return kosanRepository.save(newKosan);
-        });
+    KosanDto updateKosan(@RequestBody KosanDto kosanDto, @PathVariable Long id){
+        Kosan updatedKosan = kosanDto.toDao();
+        updatedKosan = kosanService.update(id, updatedKosan);
+        return KosanDto.fromDao(updatedKosan);
     }
 
     @DeleteMapping("/kosan/{id}")
-    Optional<Kosan> deleteKosan(@PathVariable Long id){
-        Optional<Kosan> deletedKosan = kosanRepository.findById(id);
-        deletedKosan.map(kosan -> {
-            kosanRepository.deleteById(kosan.getId());
-            return kosan;
-        }).orElseThrow(() -> new KosanNotFoundException(id));
-        return deletedKosan;
+    KosanDto deleteKosan(@PathVariable Long id){
+        Kosan kosan = kosanService.deleteById(id);
+        return KosanDto.fromDao(kosan);
     }
 
 }
