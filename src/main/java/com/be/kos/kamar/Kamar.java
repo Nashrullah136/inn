@@ -1,6 +1,6 @@
 package com.be.kos.kamar;
 
-import com.be.kos.harga.Harga;
+import com.be.kos.kamar.harga.Harga;
 import com.be.kos.kosan.Kosan;
 import com.be.kos.penghuni.Penghuni;
 
